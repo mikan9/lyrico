@@ -1,2 +1,2 @@
-# lyrico
+# Lyrico
 Lyrics on demand.

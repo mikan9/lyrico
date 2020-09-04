@@ -1,6 +1,7 @@
 const express = require("express");
 const https = require("https");
 const fs = require("fs");
+const path = require("path");
 const bodyParser = require("body-parser");
 const axios = require("axios");
 const {
@@ -77,7 +78,7 @@ app.post("/refresh", async (req, res) => {
 
 
 https.createServer({
-    key: fs.readFileSync("./key.pem"),
-    cert: fs.readFileSync("./cert.pem"),
+    key: fs.readFileSync(path.resolve(__dirname, "./key.pem")),
+    cert: fs.readFileSync(path.resolve(__dirname, "./cert.pem")),
     passphrase: PASS_PHRASE
 }, app).listen(PORT);

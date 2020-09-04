@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView x:Class="Lyrico.Views.LyricsView"
+             xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="http://prismlibrary.com"
+             prism:ViewModelLocator.AutowireViewModel="True">
+    <ContentView.Resources>
+        <ResourceDictionary Source="../Resources/DefaultResourceDictionary.xaml"></ResourceDictionary>
+    </ContentView.Resources>
+    <ContentView.Content>
+        <Frame BackgroundColor="#99000000" CornerRadius="10">
+            <ScrollView>
+                <Label Text="{Binding LyricsContent}" FontSize="24" HorizontalTextAlignment="Center" TextColor="{StaticResource ForegroundSecondary}" />
+            </ScrollView>
+        </Frame>
+    </ContentView.Content>
+</ContentView>

@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="Lyrico.Views.MainPage"
+             xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:Lyrico.Views"
+             >
+    <ContentPage.Resources>
+        <ResourceDictionary Source="../Resources/DefaultResourceDictionary.xaml"></ResourceDictionary>
+    </ContentPage.Resources>
+
+    <StackLayout>
+        <Frame Padding="0" VerticalOptions="FillAndExpand">
+            <Frame.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="#500125" Offset="0.1"/>
+                    <GradientStop Color="#8F5E4D" Offset="1.0"/>
+                </LinearGradientBrush>
+            </Frame.Background>
+
+            <StackLayout>
+                <views:SongView></views:SongView>
+                <views:LyricsView Padding="10" VerticalOptions="FillAndExpand"></views:LyricsView>
+                <!--<views:ToolbarView></views:ToolbarView> Not Yet Implemented -->
+            </StackLayout>
+        </Frame>
+    </StackLayout>
+</ContentPage>

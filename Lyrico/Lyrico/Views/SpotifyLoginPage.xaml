@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="http://prismlibrary.com"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="Lyrico.Views.SpotifyLoginPage"
+             BackgroundColor="{StaticResource BackgroundSecondary}">
+    <ContentPage.Resources>
+        <ResourceDictionary Source="../Resources/DefaultResourceDictionary.xaml"></ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout Visual="Material" VerticalOptions="Center" Padding="20">
+            <Label Text="{StaticResource Spotify}" FontFamily="FA-B" FontSize="72" TextColor="{StaticResource ForegroundSecondary}" HorizontalTextAlignment="Center" Margin="0,0,0,50"/>
+            <Label Text="Please authenticate to Spotify" TextColor="{StaticResource ForegroundSecondary}" FontSize="{StaticResource FontSizeMedium}" HorizontalTextAlignment="Center" Margin="0,0,0,20"/>
+            <Button Text="Authenticate" Command="{Binding OpenAuthenticationPageCommand}" FontSize="{StaticResource FontSizeSmall}" HorizontalOptions="Center"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

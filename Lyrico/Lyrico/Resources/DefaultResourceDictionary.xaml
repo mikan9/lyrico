@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <Color x:Key="ForegroundPrimary">#2C2C2C</Color>
+    <Color x:Key="ForegroundSecondary">#ccc</Color>
+    <Color x:Key="BackgroundPrimary">#ccc</Color>
+    <Color x:Key="BackgroundSecondary">#282828</Color>
+    <Color x:Key="AccentPrimary">#E5957A;</Color>
+    <Color x:Key="AccentSecondary">#80003A;</Color>
+
+    <x:Double x:Key="FontSizeSmall">18</x:Double>
+    <x:Double x:Key="FontSizeMedium">24</x:Double>
+    <x:Double x:Key="FontSizeLarge">36</x:Double>
+    
+</ResourceDictionary>

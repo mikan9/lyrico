@@ -491,3 +491,5 @@ dist
 ### VisualStudioCode Patch ###
 # Ignore all local history of files
 .history
+SpotifyTokenServer/key.pem
+SpotifyTokenServer/cert.pem

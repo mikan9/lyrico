@@ -11,8 +11,8 @@
     </ContentView.Resources>
 
     <ContentView.Content>
-        <sh:Shadows Shades="{sh:SingleShade Offset='0, 5', Opacity=0.5, BlurRadius=10, Color=Black}">
-            <Grid BackgroundColor="{StaticResource BackgroundSecondary}" Padding="16">
+        <sh:Shadows Shades="{sh:SingleShade Offset='0, 5', Opacity=0.16, BlurRadius=10, Color=Black}">
+            <Grid BackgroundColor="{StaticResource BackgroundSecondary}" MinimumHeightRequest="96" Padding="16" VerticalOptions="FillAndExpand">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition Width="104"/>
@@ -21,7 +21,7 @@
                     <Label Text="{Binding Title}" TextColor="{StaticResource ForegroundSecondary}" FontSize="{StaticResource FontSizeMedium}"/>
                     <Label Text="{Binding Artist}" TextColor="{StaticResource ForegroundSecondary}" FontSize="{StaticResource FontSizeSmall}"/>
                 </StackLayout>
-                <Image Grid.Column="1" WidthRequest="72" HeightRequest="72"  HorizontalOptions="End" VerticalOptions="Center">
+                <Image Grid.Column="1" MinimumWidthRequest="72" MinimumHeightRequest="72"  HorizontalOptions="End" VerticalOptions="Center">
                     <Image.Source>
                         <UriImageSource Uri="{Binding AlbumCover}"
                                     CacheValidity="14"

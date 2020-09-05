@@ -10,7 +10,7 @@
     <ContentView.Content>
         <Frame BackgroundColor="#99000000" CornerRadius="10">
             <ScrollView>
-                <Label Text="{Binding LyricsContent}" FontSize="24" HorizontalTextAlignment="Center" TextColor="{StaticResource ForegroundSecondary}" />
+                <Label Text="{Binding LyricsContent}" FontSize="20" HorizontalTextAlignment="Center" TextColor="{StaticResource ForegroundSecondary}" />
             </ScrollView>
         </Frame>
     </ContentView.Content>

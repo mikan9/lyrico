@@ -7,7 +7,7 @@
     </ContentView.Resources>
     <ContentView.Content>
       <Grid HeightRequest="72" HorizontalOptions="FillAndExpand">
-            <BoxView HeightRequest="32" BackgroundColor="{StaticResource ForegroundSecondary}" VerticalOptions="End"/>
+            <BoxView HeightRequest="32" BackgroundColor="#2F2F2F" VerticalOptions="End"/>
             <BoxView HeightRequest="64" WidthRequest="64" CornerRadius="64" HorizontalOptions="Center" BackgroundColor="{StaticResource ForegroundSecondary}" VerticalOptions="End"/>
             <Button HeightRequest="48" 
                     WidthRequest="48" 

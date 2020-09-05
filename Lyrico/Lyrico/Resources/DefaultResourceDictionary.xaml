@@ -2,10 +2,10 @@
 <ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
-    <Color x:Key="ForegroundPrimary">#2C2C2C</Color>
-    <Color x:Key="ForegroundSecondary">#ccc</Color>
+    <Color x:Key="ForegroundPrimary">#C8C8C8</Color>
+    <Color x:Key="ForegroundSecondary">#C8C8C8</Color>
     <Color x:Key="BackgroundPrimary">#ccc</Color>
-    <Color x:Key="BackgroundSecondary">#282828</Color>
+    <Color x:Key="BackgroundSecondary">#121212</Color>
     <Color x:Key="AccentPrimary">#E5957A;</Color>
     <Color x:Key="AccentSecondary">#80003A;</Color>
 

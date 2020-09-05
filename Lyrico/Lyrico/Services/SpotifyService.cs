@@ -24,12 +24,10 @@ namespace Lyrico.Services
 
         public async Task<SwapResponse> RequestToken(string code)
         {
-
             HttpResponseMessage response = await _restService.Post(Urls.TokenSwap, "code", code);
             if (response == null || response.StatusCode == System.Net.HttpStatusCode.NoContent) return null;
 
             string result = await response.Content.ReadAsStringAsync();
-
             return JsonConvert.DeserializeObject<SwapResponse>(result);
         }
 
@@ -63,7 +61,6 @@ namespace Lyrico.Services
             if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized || string.IsNullOrEmpty(result))
                 return null;
 
-            
             return JsonConvert.DeserializeObject<CurrentlyPlaying>(result);
         }
     }

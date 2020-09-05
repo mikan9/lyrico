@@ -26,6 +26,8 @@ namespace Lyrico.Utils.Parsers
             doc.LoadHtml(html);
 
             HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes("//p[contains(@class, 'verse')]");
+            if (nodes == null) return null;
+
             List<string> verses = new List<string>();
             foreach(HtmlNode node in nodes)
             {

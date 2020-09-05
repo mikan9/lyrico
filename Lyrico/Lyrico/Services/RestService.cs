@@ -67,17 +67,6 @@ namespace Lyrico.Services
                     try
                     {
                         return await client.SendAsync(request);
-
-                        //if (response.StatusCode == System.Net.HttpStatusCode.OK)
-                        //{
-                        //    response.EnsureSuccessStatusCode();
-                        //    return await response.Content.ReadAsStringAsync();
-                        //}
-                        //else if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
-                        //{
-                        //    return null;
-                        //}
-                        //else return response.StatusCode.ToString();
                     }
                     catch(HttpRequestException e)
                     {

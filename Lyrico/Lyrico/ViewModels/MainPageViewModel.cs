@@ -57,6 +57,8 @@ namespace Lyrico.ViewModels
         {
             if((string)parameters["auth"] == "success")
                 _pollingService.Start();
+            else if((string)parameters["auth"] == "fail")
+                _eventAggregator.GetEvent<ExceptionThrownEvent>().Publish("Authentication to Spotify failed.");
         }
 
         private void NavigateToSpotifyLoginPage()
@@ -67,7 +69,11 @@ namespace Lyrico.ViewModels
         public async void GetSong()
         {
             CurrentlyPlaying currentlyPlaying = await _spotifyService.GetCurrentlyPlaying();
-            if (currentlyPlaying == null) return;
+            if (currentlyPlaying == null)
+            {
+                _eventAggregator.GetEvent<ExceptionThrownEvent>().Publish("Communication with the server failed.");
+                return;
+            }
 
             Item item = currentlyPlaying.Item;
 
@@ -77,22 +83,32 @@ namespace Lyrico.ViewModels
 
         async Task GetLyrics(string artist, string title)
          {
+            bool success = true;
             var lyrics = await App.Database.GetLyricsAsync(artist.ToLower(), title.ToLower());
-            if(lyrics == null)
+            if (lyrics == null)
             {
-                await AddLyrics(artist, title);
-                lyrics = await App.Database.GetLyricsAsync(artist.ToLower(), title.ToLower());
+                success = await AddLyrics(artist, title);
+                if (success)
+                    lyrics = await App.Database.GetLyricsAsync(artist.ToLower(), title.ToLower());
             }
+            if(success)
+                _eventAggregator.GetEvent<LyricsRetrievedEvent>().Publish(lyrics);
+            else
+                _eventAggregator.GetEvent<ExceptionThrownEvent>().Publish("Lyrics could not be found.");
+        }
 
-            _eventAggregator.GetEvent<LyricsRetrievedEvent>().Publish(lyrics);
-         }
-
-        async Task AddLyrics(string artist, string title)
+        async Task<bool> AddLyrics(string artist, string title)
         {
             if (!isAddingLyrics)
             {
                 isAddingLyrics = true;
                 string content = await new MetrolyricsParser().ParseHtml(artist, title);
+
+                if (string.IsNullOrWhiteSpace(content))
+                {
+                    isAddingLyrics = false;
+                    return false;
+                }
 
                 await App.Database.SaveLyricsAsync(new Lyrics()
                 {
@@ -101,7 +117,10 @@ namespace Lyrico.ViewModels
                     Content = content
                 });
                 isAddingLyrics = false;
+
+                return true;
             }
+            return false;
         }
     }
 }

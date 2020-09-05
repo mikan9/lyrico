@@ -55,7 +55,7 @@ namespace Lyrico.ViewModels
             var result = await _webAuthService.LaunchUriAsync(uri.OriginalString);
 
             Console.WriteLine("Request State: " + request.State + " | Result State: " + result.Properties["state"]);
-            if (request.State != result.Properties["state"])
+            if (!result.Properties["state"].StartsWith(request.State)) // Spotify sometimes appends #_=_ to the sent State parameter. Investigation as to why this is happening is needed. Might change to Json parsing using custom class.
                 throw new SecurityException("Antiforgery token validation failed");
 
             var swapResult = await _spotifyService.RequestToken(result.Properties["code"]);

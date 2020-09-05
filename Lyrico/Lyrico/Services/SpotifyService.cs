@@ -24,7 +24,11 @@ namespace Lyrico.Services
 
         public async Task<SwapResponse> RequestToken(string code)
         {
-            string result = await _restService.Post(Urls.TokenSwap, "code", code);
+
+            HttpResponseMessage response = await _restService.Post(Urls.TokenSwap, "code", code);
+            if (response == null || response.StatusCode == System.Net.HttpStatusCode.NoContent) return null;
+
+            string result = await response.Content.ReadAsStringAsync();
 
             return JsonConvert.DeserializeObject<SwapResponse>(result);
         }
@@ -32,7 +36,10 @@ namespace Lyrico.Services
         public async Task RefreshToken()
         {
             string refresh_token = await SecureStorage.GetAsync("refresh_token");
-            string result = await _restService.Post(Urls.TokenRefresh, "refresh_token", refresh_token);
+            HttpResponseMessage response = await _restService.Post(Urls.TokenRefresh, "refresh_token", refresh_token);
+            if (response == null || response.StatusCode == System.Net.HttpStatusCode.NoContent) return;
+
+            string result = await response.Content.ReadAsStringAsync();
             TokenResponse res = JsonConvert.DeserializeObject<TokenResponse>(result);
             TokenUtil.SetAccessToken(res);
         }
@@ -50,10 +57,12 @@ namespace Lyrico.Services
                 { "Authorization",  $"Bearer {accessToken}" }
             };
 
-            string result = await _restService.Get(Urls.CurrentlyPlaying, headers, null, null);
+            HttpResponseMessage response = await _restService.Get(Urls.CurrentlyPlaying, headers, null, null);
+            string result = await response.Content.ReadAsStringAsync();
 
-            if (string.IsNullOrEmpty(result))
+            if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized || string.IsNullOrEmpty(result))
                 return null;
+
             
             return JsonConvert.DeserializeObject<CurrentlyPlaying>(result);
         }

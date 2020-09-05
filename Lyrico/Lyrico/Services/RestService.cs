@@ -22,24 +22,24 @@ namespace Lyrico.Services
         {
         }
 
-        public async Task<string> Get(Uri uri, string key, string value)
+        public async Task<HttpResponseMessage> Get(Uri uri, string key, string value)
         {
             return await Request(uri, null, new Dictionary<string, string> { { key, value } }, null, "GET");
         }
-        public async Task<string> Get(Uri uri, Dictionary<string, string> headers, Dictionary<string, string> bodyParams, string contentType)
+        public async Task<HttpResponseMessage> Get(Uri uri, Dictionary<string, string> headers, Dictionary<string, string> bodyParams, string contentType)
         {
             return await Request(uri, headers, bodyParams, contentType, "GET");
         }
-        public async Task<string> Post(Uri uri, string key, string value)
+        public async Task<HttpResponseMessage> Post(Uri uri, string key, string value)
         {
             return await Request(uri, null, new Dictionary<string, string> { { key, value } }, "application/x-www-form-urlencoded", "POST");
         }
-        public async Task<string> Post(Uri uri, Dictionary<string, string> headers, Dictionary<string, string> bodyParams, string contentType)
+        public async Task<HttpResponseMessage> Post(Uri uri, Dictionary<string, string> headers, Dictionary<string, string> bodyParams, string contentType)
         {
             return await Request(uri, headers, bodyParams, contentType, "POST");
         }
 
-        public async Task<string> Request(Uri uri, Dictionary<string, string> headers, Dictionary<string, string> bodyParams, string contentType, string method)
+        public async Task<HttpResponseMessage> Request(Uri uri, Dictionary<string, string> headers, Dictionary<string, string> bodyParams, string contentType, string method)
         {
             using (HttpClient client = new HttpClient(httpHandler, false))
             {
@@ -64,19 +64,25 @@ namespace Lyrico.Services
                         if (MediaTypeHeaderValue.TryParse(contentType, out MediaTypeHeaderValue headerValue))
                             request.Content.Headers.ContentType = headerValue;
 
-
-                    HttpResponseMessage response = await client.SendAsync(request);
-
-                    if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                    try
                     {
-                        response.EnsureSuccessStatusCode();
-                        return await response.Content.ReadAsStringAsync();
+                        return await client.SendAsync(request);
+
+                        //if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                        //{
+                        //    response.EnsureSuccessStatusCode();
+                        //    return await response.Content.ReadAsStringAsync();
+                        //}
+                        //else if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
+                        //{
+                        //    return null;
+                        //}
+                        //else return response.StatusCode.ToString();
                     }
-                    else if(response.StatusCode == System.Net.HttpStatusCode.NoContent)
+                    catch(HttpRequestException e)
                     {
                         return null;
                     }
-                    else throw new Exception("Server responded with: [" + response.StatusCode + "] " + response.ReasonPhrase);
                     
                 }
             }

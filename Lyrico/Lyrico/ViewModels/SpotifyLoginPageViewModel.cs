@@ -59,11 +59,16 @@ namespace Lyrico.ViewModels
                 throw new SecurityException("Antiforgery token validation failed");
 
             var swapResult = await _spotifyService.RequestToken(result.Properties["code"]);
-            Console.WriteLine(swapResult.AccessToken);
 
-            TokenUtil.SetAccessToken(swapResult);
-
-            await _navigationService.NavigateAsync("MainPage?auth=success");
+            if (swapResult == null)
+            {
+                await _navigationService.NavigateAsync("MainPage?auth=fail");
+            }
+            else
+            {
+                TokenUtil.SetAccessToken(swapResult);
+                await _navigationService.NavigateAsync("MainPage?auth=success");
+            }
         }
 
     }

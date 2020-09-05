@@ -92,7 +92,6 @@ namespace Lyrico.ViewModels
             if (!isAddingLyrics)
             {
                 isAddingLyrics = true;
-                Console.WriteLine(artist + " - " + title);
                 string content = await new MetrolyricsParser().ParseHtml(artist, title);
 
                 await App.Database.SaveLyricsAsync(new Lyrics()

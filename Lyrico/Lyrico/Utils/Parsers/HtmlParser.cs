@@ -37,8 +37,6 @@ namespace Lyrico.Utils.Parsers
             {
                 cleanData.Append(str.Replace("<br>", Environment.NewLine).Trim() + Environment.NewLine + Environment.NewLine);
             }
-
-            Console.WriteLine(cleanData.ToString());
             return cleanData.ToString();
         }
 

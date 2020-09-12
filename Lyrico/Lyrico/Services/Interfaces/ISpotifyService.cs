@@ -7,7 +7,7 @@ namespace Lyrico.Services.Interfaces
     public interface ISpotifyService
     {
         Task<SwapResponse> RequestToken(string code);
-        Task<CurrentlyPlaying> GetCurrentlyPlaying();
+        Task<(CurrentlyPlaying, SpotifyService.StatusCode)> GetCurrentlyPlaying();
 
     }
 }

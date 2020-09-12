@@ -15,6 +15,7 @@ using Lyrico.Utils;
 using Lyrico.Utils.Parsers;
 using Lyrico.Models.Spotify;
 using Lyrico.Extensions;
+using Lyrico.Services;
 
 namespace Lyrico.ViewModels
 {
@@ -30,6 +31,7 @@ namespace Lyrico.ViewModels
         public MainPageViewModel(IEventAggregator ea, INavigationService ns, ISpotifyService ss, IPollingService ps)
         {
             _eventAggregator = ea;
+            _eventAggregator.GetEvent<ReAuthEvent>().Subscribe(Authenticate);
             _navigationService = ns;
             _spotifyService = ss;
             _pollingService = ps;
@@ -38,7 +40,7 @@ namespace Lyrico.ViewModels
            
             if (Preferences.Get("first_run", true) || !Preferences.Get("has_auth", false))
             {
-                NavigateToSpotifyLoginPage();
+                Authenticate();
 
                 Preferences.Set("first_run", false);
             }
@@ -46,6 +48,12 @@ namespace Lyrico.ViewModels
             {
                 _pollingService.Start();
             }
+        }
+
+        public void Authenticate()
+        {
+            _pollingService.Stop();
+            NavigateToSpotifyLoginPage();
         }
 
         public void OnNavigatedFrom(INavigationParameters parameters)
@@ -68,9 +76,14 @@ namespace Lyrico.ViewModels
 
         public async void GetSong()
         {
-            CurrentlyPlaying currentlyPlaying = await _spotifyService.GetCurrentlyPlaying();
-            if (currentlyPlaying == null)
+            var (currentlyPlaying, status) = await _spotifyService.GetCurrentlyPlaying();
+            if (status != SpotifyService.StatusCode.Success)
             {
+                if (status == SpotifyService.StatusCode.NoRefreshToken)
+                {
+                    Authenticate();
+                    return;
+                }
                 _eventAggregator.GetEvent<ExceptionThrownEvent>().Publish("Communication with the server failed.");
                 return;
             }

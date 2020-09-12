@@ -25,7 +25,11 @@ app.use(bodyParser.urlencoded({
 
 function log(id, msg) {
     var today = new Date();
-    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    var h = today.getHours();
+    var m = today.getMinutes();
+    var s = today.getSeconds();
+
+    var time = (h > 9 ? h : "0" + h) + ":" + (m > 9 ? m : "0" + m) + ":" + (s > 9 ? s : "0" + s);
     console.log("[" + time + "]: " + "<" + id + "> " + msg);
 }
 
@@ -49,7 +53,7 @@ app.post("/swap", async (req, res) => {
         log("swap", "Success!");
         return res.send(data);
     } catch (ex) {
-        log("error", ex);
+        log("swap error", ex);
     }
 });
 
@@ -72,7 +76,10 @@ app.post("/refresh", async (req, res) => {
         log("refresh", "Success!");
         return res.send(data);
     } catch (ex) {
-        log("error", ex);
+        if (ex.response)
+            log("refresh error", ex.response.data.error_description);
+        else
+            log("refresh error", ex.message);
     }
 });
 

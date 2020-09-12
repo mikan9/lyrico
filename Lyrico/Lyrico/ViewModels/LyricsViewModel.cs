@@ -1,10 +1,7 @@
 ﻿using Lyrico.Events;
 using Lyrico.Models;
 using Lyrico.Views;
-using Prism.Commands;
 using Prism.Events;
-using System;
-using System.Diagnostics;
 
 namespace Lyrico.ViewModels
 {
